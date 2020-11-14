@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package}.${moduleName}.dao.${className}Dao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="${package}.${moduleName}.entity.${className}Entity" id="${classname}Map">
+#foreach($column in $columns)
+        <result property="${column.attrname}" column="${column.columnName}"/>
+#end
+    </resultMap>
+    
+    <!-- 查询列表 -->
+	<select id="${classname}Page" resultMap="${classname}Map" parameterType="java.util.Map">
+	SELECT
+    ${tableName}.*
+    FROM ${tableName}
+    WHERE 1=1
+#foreach($column in $columns)
+   <if test="${column.attrname} != null and ${column.attrname} != ''" >
+       AND ${column.columnName} = #{${column.attrname}}
+    </if>
+#end
+	</select>
+</mapper>

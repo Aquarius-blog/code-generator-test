@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${comments}</title>
+   	<#include "/header.html">
+</head>
+<body>
+<div id="rrapp">
+	<!-- 数据列表工具栏（toolbar） -->
+	<div id="toolbar">
+        <div class="grid-btn">
+	        <form id="queryForm" action="">
+	       		<div class="form-group col-sm-2">
+       			#foreach($column in $columns)
+       			#if($column.columnName != $pk.columnName)
+<input type="text" class="form-control" v-model="q.${column.attrname}" @keyup.enter="query" placeholder="${column.comments}">
+				#end
+				#end
+			</div>
+	        	<a class="btn btn-default" @click="query">&nbsp;查询</a>
+				<a class="btn btn-primary" @click="add">&nbsp;新增</a>
+				<a class="btn btn-primary" @click="importPage">&nbsp;导入</a>
+				<a class="btn btn-primary" @click="exportPage">&nbsp;导出</a>
+				<a class="btn btn-primary" @click="del">&nbsp;批量删除</a>
+	        </form>
+	     </div>
+	  </div>
+	 <!-- 数据列表（table） -->
+     <table id="table"></table>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+			</div>
+			<div class="modal-body">
+        	<form class="form-horizontal">
+            #foreach($column in $columns)
+            #if($column.columnName != $pk.columnName)
+            <div class="form-group">
+            <div class="col-sm-2 control-label">${column.comments}</div>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" v-model="${classname}.${column.attrname}" placeholder="${column.comments}"/>
+            </div>
+            </div>
+            #end
+            #end
+        	</form>
+    		</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+				<input id="saveOrUpdate" type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+<script src="../../js/modules/${moduleName}/${pathName}.js"></script>
+</body>
+</html>
